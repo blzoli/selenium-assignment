@@ -1,0 +1,73 @@
+name: Selenium Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:4.22.0
+        ports:
+          - 4444:4444
+        options: >-
+          --shm-size=2g
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Selenium
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:4444/status >/dev/null 2>&1; then
+              echo "Selenium is up."
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Timed out waiting for Selenium" >&2
+          exit 1
+
+      - name: Build test runner image
+        run: docker build -t selenium-assignment-tests .
+
+      - name: Run test suite
+        id: run_tests
+        run: |
+          set +e
+
+          # The container runs as user "gradle" (uid 1000). The GitHub runner workspace
+          # is owned by a different uid, so make the bind-mounted build dir writable.
+          mkdir -p "$GITHUB_WORKSPACE/build"
+          chmod -R a+rwx "$GITHUB_WORKSPACE/build"
+
+          # Mount ./build so Gradle HTML + XML results survive the container.
+          docker run --rm \
+            --network host \
+            -e SELENIUM_REMOTE_URL=http://localhost:4444/wd/hub \
+            -v "$GITHUB_WORKSPACE/build:/home/gradle/project/build" \
+            selenium-assignment-tests
+
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload HTML test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-report
+          path: build/reports/tests/test
+
+      - name: Upload JUnit XML results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-xml-results
+          path: build/test-results/test
+
+      - name: Fail job if tests failed
+        if: ${{ steps.run_tests.outputs.exit_code != '0' }}
+        run: exit 1

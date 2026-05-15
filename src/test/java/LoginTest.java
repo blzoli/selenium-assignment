@@ -1,16 +1,29 @@
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import java.util.Random;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import java.net.URL;
-import java.net.MalformedURLException;
-import org.openqa.selenium.support.ui.*;
+public class LoginTest extends BaseCsfdTest {
 
+    @Test
+    public void canLoginWithValidCredentials() {
 
+        login("seleniumTest", "Selenium2026");
+        assertLoggedIn();
+    }
 
-import org.junit.*;
+    // generate random string for username and password, attempt login and assert error message is visible
 
-public class LoginTest {
+    @Test
+    public void cannotLoginWithInvalidCredentials() {
 
+        Random random = new Random(System.currentTimeMillis());
 
-};
+        String username = "user" + random.nextInt(100000);
+        String password = "pass" + random.nextInt(100000);
+
+        login(username, password);
+        waitVisibility(By.xpath("//div[contains(text(), 'Přihlášení se nezdařilo. Přezdívka nebo heslo jsou nesprávné. Zadáváš správně velká a malá písmena v heslu?')]"));
+    }
+
+}
