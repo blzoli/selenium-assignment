@@ -39,6 +39,11 @@ jobs:
         run: |
           set +e
 
+          # The container runs as user "gradle" (uid 1000). The GitHub runner workspace
+          # is owned by a different uid, so make the bind-mounted build dir writable.
+          mkdir -p "$GITHUB_WORKSPACE/build"
+          chmod -R a+rwx "$GITHUB_WORKSPACE/build"
+
           # Mount ./build so Gradle HTML + XML results survive the container.
           docker run --rm \
             --network host \
