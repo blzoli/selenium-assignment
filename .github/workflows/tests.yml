@@ -35,8 +35,34 @@ jobs:
         run: docker build -t selenium-assignment-tests .
 
       - name: Run test suite
+        id: run_tests
         run: |
+          set +e
+
+          # Mount ./build so Gradle HTML + XML results survive the container.
           docker run --rm \
             --network host \
             -e SELENIUM_REMOTE_URL=http://localhost:4444/wd/hub \
+            -v "$GITHUB_WORKSPACE/build:/home/gradle/project/build" \
             selenium-assignment-tests
+
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload HTML test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-report
+          path: build/reports/tests/test
+
+      - name: Upload JUnit XML results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-xml-results
+          path: build/test-results/test
+
+      - name: Fail job if tests failed
+        if: ${{ steps.run_tests.outputs.exit_code != '0' }}
+        run: exit 1

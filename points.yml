@@ -22,7 +22,8 @@ ai_usage:
   used: true
   tools: "GitHub Copilot"           # e.g. "Claude, GitHub Copilot"
   description: "Copilot autocomplete was on in VSCode, I use it to make writing boilerplate Java faster.
-                Also asked the chat function for advice on how to structure the project and help with dockerfiles"     
+                Asked the chat function for advice on how to structure the project. 
+                Also helped with docker and github action files"     
                        # e.g. "Used Claude to generate initial Page Object 
                        #  classes, then modified them manually. Used Copilot 
                        #  for autocomplete while writing test methods."
@@ -67,11 +68,11 @@ basic:
     description: "Log out from the application and verify it"
 
   fill_input:                # 1 pt each | repeatable | max 10
-    count: 1
+    count: 3
     description: "Fill an input field (text, radio, checkbox, date, etc.) — each different type counts as one"
 
   send_form:                 # 1 pt each | repeatable | max 10
-    count: 1
+    count: 3
     description: "Submit a form (each distinct form counts as one)"
 
   static_page_test:          # 2 pts | once
@@ -83,7 +84,7 @@ basic:
     description: "Define an array of URLs or page data, iterate over them and verify something on each page (e.g. check title or a specific element on 5 different pages using a loop)"
 
   complex_xpath:             # 1 pt each | repeatable | max 10
-    count: 6
+    count: 9
     description: "Use a complex XPath expression (e.g. //div[@class='content']//a[contains(@href,'profile')])"
 
   textarea:                  # 1 pt | once
@@ -91,7 +92,7 @@ basic:
     description: "Fill or read the content of a textarea element"
 
   dropdown:                  # 2 pts | once
-    done: false
+    done: true
     description: "Select an option from a drop-down (using Select class or similar)"
     link: "https://www.selenium.dev/documentation/webdriver/support_features/select_lists/"
 
@@ -108,7 +109,7 @@ basic:
     description: "Project has at least 6 Java classes (cumulative with above)"
 
   at_least_8_classes:        # 3 pts | once
-    done: false
+    done: true
     description: "Project has at least 8 Java classes (cumulative with above)"
 
   explicit_wait:             # 3 pts | once
