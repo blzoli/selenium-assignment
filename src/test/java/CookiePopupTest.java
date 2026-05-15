@@ -16,7 +16,7 @@ public class CookiePopupTest extends BaseCsfdTest {
 
     @Test
     // delete accepted cookies and assert that cookie popup is visible again
-    public void canHandleCookiePopup() {
+    public void cookiePopupReappearsAfterClearingCookies() {
         clearCookieConsentState();
 
         // reload homepage so the consent script runs again
