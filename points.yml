@@ -112,7 +112,7 @@ basic:
     description: "Project has at least 8 Java classes (cumulative with above)"
 
   explicit_wait:             # 3 pts | once
-    done: false
+    done: true
     description: "Use explicit wait (WebDriverWait with ExpectedConditions)"
     link: "https://www.selenium.dev/documentation/webdriver/waits/"
 
@@ -126,7 +126,7 @@ basic:
     link: "https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/"
 
   base_page_class:           # 1 pt | once
-    done: false
+    done: true
     description: "Create a BasePage class that other page classes extend"
 
   readable_tests:            # 3 pts | once
@@ -138,12 +138,12 @@ basic:
 # ----------------------------------------------------------
 advanced:
   webdriver_config:          # 4 pts | once
-    done: false
+    done: true
     description: "Configure WebDriver with custom options (e.g. ChromeOptions, window size, user agent)"
     link: "https://www.selenium.dev/documentation/webdriver/drivers/options/"
 
   cookie_manipulation:       # 6 pts | once
-    done: false
+    done: true
     description: "Manipulate cookies meaningfully (e.g. add/delete/read cookies, skip consent popup)"
     link: "https://www.selenium.dev/documentation/webdriver/interactions/cookies/"
 
