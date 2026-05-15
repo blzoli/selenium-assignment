@@ -57,7 +57,12 @@ public abstract class BaseCsfdTest {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--window-size=1920,1080");
 
-		this.driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
+		String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
+		if (remoteUrl == null || remoteUrl.trim().isEmpty()) {
+			remoteUrl = "http://selenium:4444/wd/hub";
+		}
+
+		this.driver = new RemoteWebDriver(new URL(remoteUrl.trim()), options);
 		this.wait = new WebDriverWait(driver, 10);
 
 		// Pre-load homepage to handle cookie consent once per test

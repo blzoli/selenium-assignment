@@ -1,3 +1,5 @@
 build/
 .gradle/
 *:Zone.Identifier
+.env
+docker-compose.override.yml

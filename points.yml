@@ -22,7 +22,7 @@ ai_usage:
   used: true
   tools: "GitHub Copilot"           # e.g. "Claude, GitHub Copilot"
   description: "Copilot autocomplete was on in VSCode, I use it to make writing boilerplate Java faster.
-                Also asked the chat function for advice on how to structure the project."     
+                Also asked the chat function for advice on how to structure the project and help with dockerfiles"     
                        # e.g. "Used Claude to generate initial Page Object 
                        #  classes, then modified them manually. Used Copilot 
                        #  for autocomplete while writing test methods."
@@ -209,7 +209,7 @@ advanced:
     link: "https://www.selenium.dev/documentation/webdriver/browsers/"
 
   dockerized_execution:      # 4 pts | once
-    done: false
+    done: true
     description: "Run tests inside a Docker container (e.g. using docker-compose with Selenium Grid)"
     link: "https://www.selenium.dev/documentation/grid/getting_started/"
 
