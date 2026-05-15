@@ -1,7 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 public class FormWithLoginTest extends BaseCsfdTest {
     @Test
@@ -14,7 +15,9 @@ public class FormWithLoginTest extends BaseCsfdTest {
         // find text Pošta - Všechny zprávy 
         waitVisibility(By.xpath("//h1[contains(text(), 'Pošta - Všechny zprávy')]"));
 
-        WebElement searchInput = waitVisibility(By.id("frm-fulltextSearchForm-q")).click();
+        WebElement searchInput = waitVisibility(By.id("frm-fulltextSearchForm-q"));
+
+        searchInput.click();
 
         searchInput.sendKeys("csfd");
         searchInput.sendKeys(Keys.ENTER);
