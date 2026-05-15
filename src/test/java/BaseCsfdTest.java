@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.JavascriptExecutor;
+import org.junit.Assert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,6 +45,12 @@ public abstract class BaseCsfdTest {
 	protected void assertLoggedIn() {
 		waitVisibility(By.cssSelector("div.profile-img"));
 	}
+
+	protected void waitForDocumentReady() {
+        new WebDriverWait(driver, 10).until(d ->
+                "complete".equals(((JavascriptExecutor) d).executeScript("return document.readyState"))
+        );
+    }
 
 	@Before
 	public void setup() throws MalformedURLException {
